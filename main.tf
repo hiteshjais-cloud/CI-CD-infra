@@ -1,11 +1,15 @@
-resource "aws_ecrpublic_repository" "calculator-repo" {
-  repository_name = "calculator-repo"
-  catalog_data {
-    architectures     = ["ARM,ARM 64,x86,x86-64"]
-    operating_systems = ["Linux"]
+resource "aws_ecr_repository" "calculator" {
+  name = "calculator-backend"
+
+  image_scanning_configuration {
+    scan_on_push = true
   }
 
   tags = {
     env = "production"
   }
+}
+
+output "ecr_url" {
+  value = aws_ecr_repository.calculator.repository_url
 }
